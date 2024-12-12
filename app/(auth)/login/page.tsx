@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/AuthContext";
 import { logo, robot } from "@/public/index";
@@ -31,7 +38,8 @@ export default function Login() {
     try {
       const res = await signIn(email, password);
       if (res.status) {
-        const callbackUrl = res.data.user?.role == "superadmin" ? "/dashboard" : "/classroom";
+        const callbackUrl =
+          res.data.user?.role == "superadmin" ? "/dashboard" : "/classroom";
         router.push(callbackUrl);
         queryClient.invalidateQueries();
         toast.success(res.message);
@@ -46,16 +54,27 @@ export default function Login() {
   return (
     <div className="w-full h-screen flex flex-row overflow-hidden">
       <div className="bg-[#4861D0] w-[40%] h-[100%] z-0">
-        <Image src={logo} alt={"Logo"} className="w-[240px] mt-10 ml-12 mb-[10%]" />
-        <Image src={robot} alt={"Robot Image"} className="w-[700px] absolute left-[15%] bottom-0" />
+        <Image
+          src={logo}
+          alt={"Logo"}
+          className="w-[240px] mt-10 ml-12 mb-[10%]"
+        />
+        <Image
+          src={robot}
+          alt={"Robot Image"}
+          className="w-[700px] absolute left-[15%] bottom-0"
+        />
       </div>
       <div className="bg-login-bg bg-no-repeat bg-cover w-[70%] flex justify-center items-center">
         <div className="w-[600px] h-[80%] p-5 pl-10 flex flex-col items-start">
           <div className="font-bold text-[45px]">Welcome Back</div>
-          <div className="text-left">Login to your account</div>
+          <div className="text-left">Login to your account (new_)asha</div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-[60%] space-y-4 mt-5 z-50">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-[60%] space-y-4 mt-5 z-50"
+            >
               <FormField
                 control={form.control}
                 name="email"
@@ -63,7 +82,10 @@ export default function Login() {
                   <FormItem className="">
                     <FormLabel>Enter your username or email address</FormLabel>
                     <FormControl>
-                      <Input placeholder="Username or email address" {...field} />
+                      <Input
+                        placeholder="Username or email address"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -76,7 +98,11 @@ export default function Login() {
                   <FormItem>
                     <FormLabel>Enter your Password</FormLabel>
                     <FormControl>
-                      <Input {...field} type="password" placeholder="*********" />
+                      <Input
+                        {...field}
+                        type="password"
+                        placeholder="*********"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
