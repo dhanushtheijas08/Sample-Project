@@ -1,0 +1,160 @@
+
+
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(uid);
+      const payload = {
+        uid: uid,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        addressLine1: formData.addressLine1,
+        addressLine2: formData.addressLine2,
+        addressLine3: formData.addressLine3,
+        addressLine4: formData.addressLine4,
+        postalCode: formData.postalCode,
+        country: formData.country,
+        identificationProof:formData.identificationProof,
+        frontCopy: fronturl,
+        backCopy: backurl,      
+          }
+            try {
+              // const currentUser = firebase.auth().currentUser;
+              // console.log(currentUser)
+          
+              // if (!currentUser) {
+              //   console.error("User is not authenticated.");
+              //   return; // Exit the function if there's no authenticated user
+              // }
+          
+              // const token = await currentUser.getIdToken();
+          
+              const response = await fetch('https://us-central1-project-17229.cloudfunctions.net/saveAccountDetails', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+              });
+          
+              if (response.ok) {
+                const result = await response.json();
+                console.log('Success:', result);
+              } else {
+                console.error('API Error:', response.statusText);
+              }
+            } catch (error) {
+              console.error('Error:', error);
+            }
+          // };
+      }      
+    // };
+  return (
+    <div className='flex flex-row '>
+      {/* <div className='w-1/2 h-full m-2 '>
+       <Image src={Colombo} alt='Logo' className='w-[169px] h-[88px] absolute top-[70px] '></Image>
+       <Image src={Login} alt='login'className='w-full h-[783px]' ></Image>
+      </div > */}
+      {/* right-side */}
+      <div className='h-fit w-full m-2 bg-custom-gradient  overflow-hidden text-white pt-5 pl-20'>
+       <div>
+        <h1 className='text-[28px]'>Your Details</h1>
+        <p className='text-[16px]' id='email'>{email}</p>
+       </div>
+       <form action="" onSubmit={handleSave}>
+        {/* name */}
+       <div className='flex mt-4  text-black'>
+        <input type="text" placeholder='First Name'id='firstName' className='w-[225px] h-[50px] rounded-lg mr-3 pl-5 placeholder-[#5F5672]' required value={formData.firstName} onChange={handleInputChange}/>
+        <input type="text" placeholder='Last Name ' id='lastName' className='w-[225px] h-[50px] rounded-lg pl-5 placeholder-[#5F5672]' value={formData.lastName} onChange={handleInputChange}/>
+       </div>
+       {/* phone number */}
+       <div className='mt-3 flex  text-black'>
+       <select
+            className="w-[70px] h-[50px] rounded-tl-lg rounded-bl-lg mr-0 bg-white border-[#5F5672] text-[#5F5672] text-center pl-3"
+            id="countryCode"
+            value={formData.countrycode}
+            onChange={(e) => setFormData({ ...formData, countrycode: e.target.value })}
+            >
+            <option value="+91">+91</option>
+            <option value="+44">+44</option>
+            <option value="+61">+61</option>
+            <option value="+81">+81</option>
+            <option value="+1">+1</option>
+
+          </select>
+        <input type="text" placeholder='Phone Number' id=' phoneNumber ' className='w-[155px] h-[50px] rounded-tr-lg rounded-br-lg pl-2 placeholder-[#5F5672] mr-3' required  onChange={handlePhoneNumberChange}  value={ phoneNumber } />
+
+        {/* verification*/}
+        <div id='verified'  className={`${
+        searchParamsVerify ? 'bg-[#00DD69] w-[100px]' : 'bg-red-500 w-[138px]'
+      } text-white flex rounded-[20px] text-[16px] font-semibold relative  h-[38px] mt-2`} >
+         <i className="absolute left-[8px] top-[10px] text-[18px]">
+        {searchParamsVerify ? <RiCheckboxCircleLine /> : <FaTimesCircle />}
+      </i>
+        <p className="mt-3 absolute left-[30px] -top-1">
+        {searchParamsVerify ? 'Verified' : 'Not Verified'}
+      </p>
+        </div>
+        {/* <RiCheckboxCircleLine />  bg-[#00DD69] */}
+       </div>
+       {/* Get otp  */}
+       <div >
+        <button className='text-center text-white w-[210px] h-[52px] rounded-lg bg-[#2E4289] text-[16px] font-semibold mt-3 p-3' onClick={(e) => {
+    e.preventDefault(); // Prevent default form submission
+    handleSendOtp(); // Pass the event
+           // Call handleSendSms directly
+  }} >GET OTP SMS</button>
+       </div>
+       {/* address */}
+       <div className='flex mt-3 text-[16px] text-black'>
+        <input type="text" placeholder='Address Line 1' id='addressLine1' className='w-[225px] h-[50px] rounded-lg mr-3 pl-5 placeholder-[#5F5672]' required value={formData.addressLine1} onChange={handleInputChange}/>
+        <input type="text" placeholder='Address Line 2' id='addressLine2' className='w-[225px] h-[50px] rounded-lg pl-5 placeholder-[#5F5672]' required value={formData.addressLine2} onChange={handleInputChange}/>
+       </div>
+       {/* address2 */}
+       <div className='flex mt-3 text-[16px] text-black '>
+       <input type="text" placeholder='Address Line 3' id='addressLine3' className='w-[225px] h-[50px] rounded-lg mr-3 pl-5 placeholder-[#5F5672]' required value={formData.addressLine3} onChange={handleInputChange}/>
+
+        <input type="text" placeholder='Address Line 4' id='addressLine4' className='w-[225px] h-[50px] rounded-lg pl-5 placeholder-[#5F5672]' value={formData.addressLine4} onChange={handleInputChange}/>
+       </div>
+       {/* postal */}
+       <div className='flex mt-3 text-[16px] text-black '>
+        <input type="text" placeholder='Postal Code / Zip Code' id='postalCode'  className='w-[225px] h-[50px] rounded-lg mr-3 pl-5 placeholder-[#5F5672]' required value={formData.postalCode} onChange={handleInputChange} />
+        <input type="text" placeholder='India' id='country' className='w-[225px] h-[50px] rounded-lg pl-5 placeholder-[#5F5672]' required value={formData.country} onChange={handleInputChange} />
+       </div>
+       {/* proof */}
+       <h1 className='text-[28px] text-white font-semibold mt-3'>Proof of identification</h1>
+       {/* dropdown POI */}
+       <div className='relative text-[16px]'>
+        <i className='absolute left-[480px] top-[14px] text-[#5F5672] text-[23px] '><IoMdArrowDropdown /></i>
+        <select  id="identificationProof" className= ' block appearance-none w-[521px] h-[50px] rounded-lg border-[1px] text-[#5F5672] pl-3' required value={formData.identificationProof} onChange={(e) => setFormData({ ...formData, identificationProof: e.target.value })}>
+          <option value="">Select your POI</option>
+          <option value="Aadhar">Aadhar Card</option>
+          <option value="PAN">PAN Card</option>
+        </select>
+        {/* upload */}
+        <div className='mt-5 flex h-[120px]  text-[16px]'>
+          {/* front  */}
+        <div className='w-[252px] h-[116px] bg-white border-dashed border-[#B570A0E5] border-[1px] rounded-lg cursor-pointer relative'>
+        <i  className='absolute text-black text-[22px] left-[105px] top-[30px]'><FiUpload /></i>
+        <label htmlFor="frontPhoto" className= 'text-[#5F5672] text-[16px]  hover:cursor-pointer p-2 absolute left-[65px] top-[55px] ' >{frontFileName ? frontFileName : 'Front Copy'}</label>
+        <input type="file" className='hidden' id='frontPhoto'  accept=".jpg,.jpeg,.png,.pdf"  onChange={handleFileChange1}   />
+        </div>
+        {/* back */}
+        <div className='w-[252px] h-[116px] bg-white border-dashed border-[#B570A0E5] border-[1px] rounded-lg cursor-pointer relative ml-3'>
+        <i  className='absolute text-black text-[22px] left-[105px] top-[30px]'><FiUpload /></i>
+        <label htmlFor="backPhoto" className= 'text-[#5F5672] text-[16px]  hover:cursor-pointer p-2 absolute left-[68px] top-[55px] ' >{backFileName ? backFileName : 'Back Copy'}</label>
+        <input type="file" className='hidden' id='backPhoto' accept=".jpg,.jpeg,.png,.pdf"  onChange={handleFileChange} />
+        </div>
+        </div>
+
+        {/* Save */}
+        <button className='text-center text-white w-[521px] h-[40px] rounded-lg bg-[#2E4289] text-[16px]  mt-3 mb-3 p-2 '>
+          Save
+        </button>
+       </div>
+       </form>
+       </div>
+    </div>
+  )
+}
+export default Details
